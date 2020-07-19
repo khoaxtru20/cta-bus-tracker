@@ -1,5 +1,13 @@
 conditionalEvents:
-- condition: "True"
+- condition: scene.slots.status == "FINAL"
+  handler:
+    staticPrompt:
+      candidates:
+      - promptResponse:
+          firstSimple:
+            variants:
+            - speech: 'You are looking for bus number $session.params.bus_num going
+                the direction $session.params.bus_dir . '
   transitionToScene: actions.scene.END_CONVERSATION
 onEnter:
   staticPrompt:
@@ -7,5 +15,49 @@ onEnter:
     - promptResponse:
         firstSimple:
           variants:
-          - speech: ' and hello world from the console!'
-  webhookHandler: start_scene_initial_prompt
+          - speech: What is the number of the bus and the direction you are going?
+slots:
+- commitBehavior:
+    writeSessionParam: bus_num
+  name: bus_num
+  promptSettings:
+    noInputPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Sorry, but I did not hear the bus number. Could you try again?
+                  Say something like 201 or 147.
+    noMatchPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Sorry, the bus number you said is not valid. Please try again.
+  required: true
+  type:
+    name: actions.type.Number
+- commitBehavior:
+    writeSessionParam: bus_dir
+  name: bus_dir
+  promptSettings:
+    noInputPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Sorry, but I did not hear the bus direction. Please try again.
+                  Say something like north or westbound.
+    noMatchPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Sorry, the bus direction is not valid. Please try again.
+  required: true
+  type:
+    name: cardinal_direction

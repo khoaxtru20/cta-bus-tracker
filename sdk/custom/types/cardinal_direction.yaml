@@ -1,0 +1,19 @@
+synonym:
+  entities:
+    eastbound:
+      synonyms:
+      - eastbound
+      - east
+    northbound:
+      synonyms:
+      - northbound
+      - north
+    southbound:
+      synonyms:
+      - southbound
+      - south
+    westbound:
+      synonyms:
+      - westbound
+      - west
+  matchType: EXACT_MATCH
