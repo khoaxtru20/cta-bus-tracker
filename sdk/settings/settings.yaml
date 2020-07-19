@@ -1,0 +1,16 @@
+category: TRAVEL_AND_TRANSPORTATION
+defaultLocale: en
+enabledRegions:
+- United States
+localizedSettings:
+  developerEmail: khoaxtru16@gmail.com
+  developerName: Khoa Truong
+  displayName: Windy City Bus Tracker
+  fullDescription: Track CTA buses by providing the bus number and the direction you
+    are headed.
+  pronunciation: Windy City Bus Tracker
+  sampleInvocations:
+  - Talk to Windy City Bus Tracker
+  shortDescription: Get ETAs of CTA buses near you!
+  voice: male_1
+projectId: cta-bus-tracker-73811
