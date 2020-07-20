@@ -15,27 +15,34 @@ onEnter:
     - promptResponse:
         firstSimple:
           variants:
-          - speech: What is the number of the bus and the direction you are going?
+          - speech: Welcome to Windy City Bus Tracker!
 slots:
 - commitBehavior:
     writeSessionParam: bus_num
   name: bus_num
   promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Which bus number do you need to look up?
     noInputPrompt1:
       staticPrompt:
         candidates:
         - promptResponse:
             firstSimple:
               variants:
-              - speech: Sorry, but I did not hear the bus number. Could you try again?
-                  Say something like 201 or 147.
+              - speech: Sorry, but I did not get the bus number. Could you try again?
+                  Say something like "201" or "147".
     noMatchPrompt1:
       staticPrompt:
         candidates:
         - promptResponse:
             firstSimple:
               variants:
-              - speech: Sorry, the bus number you said is not valid. Please try again.
+              - speech: Sorry, that bus number is not valid. Please try again.
   required: true
   type:
     name: actions.type.Number
@@ -43,21 +50,23 @@ slots:
     writeSessionParam: bus_dir
   name: bus_dir
   promptSettings:
+    initialPrompt:
+      webhookHandler: lookup_bus_dir
     noInputPrompt1:
       staticPrompt:
         candidates:
         - promptResponse:
             firstSimple:
               variants:
-              - speech: Sorry, but I did not hear the bus direction. Please try again.
-                  Say something like north or westbound.
+              - speech: Sorry, but I did not get the bus direction. Please try again.
+                  Say something like "north" or "westbound".
     noMatchPrompt1:
       staticPrompt:
         candidates:
         - promptResponse:
             firstSimple:
               variants:
-              - speech: Sorry, the bus direction is not valid. Please try again.
+              - speech: Sorry, that bus direction is not valid. Please try again.
   required: true
   type:
     name: cardinal_direction
