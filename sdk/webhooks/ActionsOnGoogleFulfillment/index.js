@@ -21,6 +21,7 @@ const app = conversation({debug: true});
 
 app.handle('lookup_bus_dir', (conv) => {
   console.log('Start Scene: lookup bus dir');
+  console.log('By the way your CTA API is: ' + functions.config().ctabustracker.key);
   conv.overwrite = false;
   conv.add('Which direction is your bus going?');
 });
