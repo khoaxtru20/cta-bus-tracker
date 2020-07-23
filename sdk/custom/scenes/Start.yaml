@@ -43,15 +43,19 @@ slots:
             firstSimple:
               variants:
               - speech: Sorry, that bus number is not valid. Please try again.
-  required: true
   type:
     name: actions.type.Number
+- commitBehavior:
+    writeSessionParam: bus_num_special
+  name: bus_num_special
+  type:
+    name: bus_number_special
 - commitBehavior:
     writeSessionParam: bus_dir
   name: bus_dir
   promptSettings:
     initialPrompt:
-      webhookHandler: lookup_bus_dir
+      webhookHandler: dir_lookup
     noInputPrompt1:
       staticPrompt:
         candidates:

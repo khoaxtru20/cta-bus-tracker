@@ -1,4 +1,4 @@
 handlers:
-- name: lookup_bus_dir
 inlineCloudFunction:
   executeFunction: ActionsOnGoogleFulfillment
+- name: dir_lookup

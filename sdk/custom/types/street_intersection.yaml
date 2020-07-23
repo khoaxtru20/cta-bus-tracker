@@ -1,0 +1,89 @@
+synonym:
+  entities:
+    60th street and ellis:
+      synonyms:
+      - 60th street and ellis
+      - ellis and 60th street
+      - 60th st and ellis
+      - ellis and 60th st
+      - 60th and ellis
+      - ellis and 60th
+      - 60 and ellis
+      - ellis and 60
+    915 e 60th street:
+      synonyms:
+      - 915 e 60th street
+      - 915 east 60th street
+      - 915 e 60th st
+      - 915 e 60 st
+    columbus and randolph:
+      synonyms:
+      - columbus and randolph
+      - randolph and columbus
+    cottage grove and 55th street:
+      synonyms:
+      - cottage grove and 55th street
+      - 55th street and cottage grove
+      - cottage grove and 55th
+      - 55th and cottage grove
+    e hyde park and kimbark:
+      synonyms:
+      - kimbark and e hyde park
+      - east hyde park and kimbark
+      - kimbark and east hyde park
+      - e hyde park and kimbark
+      - hyde park and kimbark
+    fairbanks and ohio:
+      synonyms:
+      - fairbanks and ohio
+      - ohio and fairbanks
+    lake park and e hyde park blvd:
+      synonyms:
+      - lake park and e hyde park blvd
+      - e hyde park blvd and lake park
+      - lake park and east hyde park blvd
+      - east hyde park blvd and lake park
+      - lake park and hyde park
+      - lake park and east hyde park boulevard
+      - lake park and hyde park boulevard
+    madison and morgan:
+      synonyms:
+      - madison and Mmrgan
+      - morgan and madison
+    michigan and e wacker:
+      synonyms:
+      - michigan and e wacker
+      - e wacker and michigan
+      - michigan and east wacker
+      - east wacker and michigan
+      - michigan and wacker
+    michigan and hubbard tribune bldg:
+      synonyms:
+      - michigan and hubbard tribune bldg
+      - hubbard and michigan
+      - tribune building
+      - tribune
+      - tribune building on michigan
+    s shore drive and cheltenham:
+      synonyms:
+      - s shore drive and cheltenham
+      - cheltenham and s shore drive
+      - south shore drive and cheltenham
+      - cheltenham and south shore drive
+      - shore drive and cheltenham
+    sheridan and arthur red line:
+      synonyms:
+      - sheridan and arthur red line
+      - arthur and sheridan
+      - red line on sheridan
+    stony island and 57th drive:
+      synonyms:
+      - stony island and 57th drive
+      - 57th drive and stony Island
+      - stony island and 57th dr
+      - 57th dr and stony island
+      - stony island and 57th
+      - 57th and stony island
+      - stony island and 57
+      - 57 and stony island
+  matchType: FUZZY_MATCH

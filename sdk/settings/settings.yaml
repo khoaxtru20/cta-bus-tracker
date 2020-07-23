@@ -12,5 +12,6 @@ localizedSettings:
   sampleInvocations:
   - Talk to Windy City Bus Tracker
   shortDescription: Get ETAs of CTA buses near you!
+  smallLogoImage: https://lh3.googleusercontent.com/HfO08HFZJQqFOnWdSY4RQzo2pekk73ZnnMdSAu22LS5DU8GmIBQygB5VPAjxtqSmwmQa0A41CJOxBA
   voice: male_1
 projectId: cta-bus-tracker-73811

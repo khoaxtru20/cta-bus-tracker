@@ -1,0 +1,21 @@
+parameters:
+- name: bus_num
+  type:
+    name: actions.type.Number
+- name: bus_dir
+  type:
+    name: cardinal_direction
+- name: bus_num_special
+  type:
+    name: bus_number_special
+trainingPhrases:
+- the ($bus_num '11' auto=false) bus going ($bus_dir 'westbound' auto=false)
+- when will the ($bus_num '14' auto=false) get here?
+- ($bus_num '88' auto=false) ($bus_dir 'west' auto=false)
+- I am looking for the ($bus_num '30' auto=false) going ($bus_dir 'south' auto=false)
+- bus ($bus_num '51' auto=false) 
+- northbound ($bus_num_special 'X49' auto=false)
+- when is the next ($bus_num '147' auto=false) bus coming?
+- I want to get on the ($bus_num_special 'X9' auto=false) ($bus_dir 'eastbound' auto=false)
+- ($bus_num_special '54B' auto=false) ($bus_dir 'northbound' auto=false)
+- ($bus_dir 'westbound' auto=false) ($bus_num '201' auto=false)

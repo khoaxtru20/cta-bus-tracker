@@ -20,12 +20,13 @@ const axios = require('axios');
 
 const app = conversation({debug: true});
 const API_KEY = '/?key=' + functions.config().ctabustracker.key;
+const JSON_FORMAT = '&format=json';
 
 axios.defaults.baseURL = 'http://www.ctabustracker.com/bustime/api/v2';
 
-app.handle('lookup_bus_dir', (conv) => {
+app.handle('dir_lookup', (conv) => {
   let ROUTE = '&rt=' + conv.scene.slots['bus_num']['value'];
-  let API_PATH = '/getdirections' + API_KEY + ROUTE +'&format=json';
+  let API_PATH = '/getdirections' + API_KEY + ROUTE +JSON_FORMAT;
 
   return axios.get(API_PATH)
   .then(response => {
@@ -40,7 +41,7 @@ app.handle('lookup_bus_dir', (conv) => {
     return Promise.resolve(response);
     
   }).catch(() => {
-    return Promise.reject(new Error('External API call rejected while handling lookup_bus_dir.'));
+    return Promise.reject(new Error('External API call rejected while handling dir_lookup.'));
   });
 });
 
