@@ -1,0 +1,32 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  transitionToScene: RequestBusStop
+onSlotUpdated:
+  webhookHandler: validate_bus_dir
+slots:
+- commitBehavior:
+    writeSessionParam: bus_dir
+  name: bus_dir
+  promptSettings:
+    initialPrompt:
+      webhookHandler: get_route_directions
+    noMatchPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Sorry, that does not match any of the options. Please try
+                  another direction.
+    noMatchPrompt2:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Sorry, that still does not match. Remember this route only
+                  goes $session.params.route_directions[0] or $session.params.route_directions[1]
+                  . Please try one of those two options.
+  required: true
+  type:
+    name: cardinal_direction

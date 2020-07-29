@@ -5,17 +5,16 @@ parameters:
 - name: bus_dir
   type:
     name: cardinal_direction
-- name: bus_num_special
-  type:
-    name: bus_number_special
 trainingPhrases:
-- the ($bus_num '11' auto=false) bus going ($bus_dir 'westbound' auto=false)
-- when will the ($bus_num '14' auto=false) get here?
-- ($bus_num '88' auto=false) ($bus_dir 'west' auto=false)
-- I am looking for the ($bus_num '30' auto=false) going ($bus_dir 'south' auto=false)
-- bus ($bus_num '51' auto=false) 
-- northbound ($bus_num_special 'X49' auto=false)
-- when is the next ($bus_num '147' auto=false) bus coming?
-- I want to get on the ($bus_num_special 'X9' auto=false) ($bus_dir 'eastbound' auto=false)
-- ($bus_num_special '54B' auto=false) ($bus_dir 'northbound' auto=false)
-- ($bus_dir 'westbound' auto=false) ($bus_num '201' auto=false)
+- tell me when bus ($bus_num '50' auto=true) will arrive
+- get me predictions for the ($bus_dir 'westbound' auto=true) ($bus_num '97' auto=false)
+  route
+- get me predictions for bus ($bus_num '26' auto=true) headed ($bus_dir 'south' auto=false)
+- get an estimate for bus ($bus_num '1' auto=true)
+- get an estimated time of arrival for route ($bus_num '84' auto=true)
+- predict when the next ($bus_num '63' auto=false) bus will be here
+- get an estimated time of arrival for the ($bus_dir 'eastbound' auto=true) ($bus_num
+  '74' auto=false)
+- find out when bus ($bus_num '111' auto=true) is coming
+- get an eta for bus number ($bus_num '147' auto=true) going ($bus_dir 'north' auto=true)
+- get an eta for route ($bus_num '201' auto=true)

@@ -1,0 +1,48 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  transitionToScene: RequestBusDirection
+intentEvents:
+- handler:
+    staticPrompt:
+      candidates:
+      - promptResponse:
+          firstSimple:
+            variants:
+            - speech: Ok! Let's find your route by name.
+  intent: SEARCH_BY_ROUTE_NAME
+  transitionToScene: RequestBusName
+- handler:
+    staticPrompt:
+      candidates:
+      - promptResponse:
+          firstSimple:
+            variants:
+            - speech: Ok! Let's search for your route by ID.
+  intent: SEARCH_SPECIAL_NUMBER
+  transitionToScene: RequestSpecialBusNumber
+onSlotUpdated:
+  webhookHandler: validate_bus_num
+slots:
+- commitBehavior:
+    writeSessionParam: bus_num
+  name: bus_num
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: What is the bus number?
+    noMatchPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: I do not recognize that route number. Try another number or
+                  say "Search by Name" to find your bus by name. If your route includes
+                  letters like "X49", say "Search special routes".
+  required: true
+  type:
+    name: actions.type.Number

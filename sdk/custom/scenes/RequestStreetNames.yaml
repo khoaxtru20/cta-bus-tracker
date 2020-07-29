@@ -1,0 +1,34 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: predict_intersection
+  transitionToScene: actions.scene.END_CONVERSATION
+slots:
+- commitBehavior:
+    writeSessionParam: main_street
+  name: main_street
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: What is the main street you are on?
+  required: true
+  type:
+    name: street_name
+- commitBehavior:
+    writeSessionParam: cross_street
+  name: cross_street
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: What is the nearest intersecting street?
+  required: true
+  type:
+    name: street_name

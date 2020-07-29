@@ -6,24 +6,15 @@ regularExpression:
     52A:
       regularExpressions:
       - 52A
+    53A:
+      regularExpressions:
+      - 53A
     54A:
       regularExpressions:
       - 54A
     54B:
       regularExpressions:
       - 54B
-    81W:
-      regularExpressions:
-      - 81W
-    85A:
-      regularExpressions:
-      - 85A
-    8A:
-      regularExpressions:
-      - 8A
-    53A:
-      regularExpressions:
-      - 53A
     55A:
       regularExpressions:
       - 55A
@@ -36,6 +27,18 @@ regularExpression:
     63W:
       regularExpressions:
       - 63W
+    81W:
+      regularExpressions:
+      - 81W
+    85A:
+      regularExpressions:
+      - 85A
+    8A:
+      regularExpressions:
+      - 8A
+    111A:
+      regularExpressions:
+      - 111A
     J14:
       regularExpressions:
       - J14

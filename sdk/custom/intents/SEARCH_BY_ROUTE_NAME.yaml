@@ -1,0 +1,15 @@
+parameters:
+- name: bus_name
+  type:
+    name: bus_name
+trainingPhrases:
+- when is the stony island bus coming
+- find my bus with the name
+- find my route with the name
+- i can give you the name of the bus
+- use the bus name to find my bus
+- use the route name to find my bus
+- search routes by name
+- search buses by name
+- search by bus name
+- search by route name

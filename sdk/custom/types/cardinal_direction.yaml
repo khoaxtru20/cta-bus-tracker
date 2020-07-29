@@ -1,18 +1,18 @@
 synonym:
   entities:
-    eastbound:
+    Eastbound:
       synonyms:
       - eastbound
       - east
-    northbound:
+    Northbound:
       synonyms:
       - northbound
       - north
-    southbound:
+    Southbound:
       synonyms:
       - southbound
       - south
-    westbound:
+    Westbound:
       synonyms:
       - westbound
       - west

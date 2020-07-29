@@ -1,0 +1,63 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: predict_number
+  transitionToScene: actions.scene.END_CONVERSATION
+intentEvents:
+- intent: SEARCH_BY_INTERSECTION
+  transitionToScene: RequestStreetNames
+- intent: SEARCH_BY_POI
+  transitionToScene: RequestPOI
+- intent: SEARCH_BY_ROUTE_NAME
+  transitionToScene: RequestBusName
+- intent: SEARCH_SPECIAL_NUMBER
+  transitionToScene: RequestSpecialBusNumber
+onEnter:
+  webhookHandler: override_bus_stop_type
+onSlotUpdated:
+  webhookHandler: validate_bus_stop
+slots:
+- defaultValue:
+    sessionParam: bus_num
+  name: bus_num
+  promptSettings:
+    noMatchPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: I heard $sessions.params.bus_num , but that is not a number.
+                  If you prefer to find your bus by its name, say "Search by Name".
+                  If your route has letters like "X49", say "Search special routes".
+  required: true
+  type:
+    name: actions.type.Number
+- defaultValue:
+    sessionParam: bus_dir
+  name: bus_dir
+  required: true
+  type:
+    name: cardinal_direction
+- commitBehavior:
+    writeSessionParam: bus_stop
+  name: bus_stop
+  promptSettings:
+    initialPrompt:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: At which stop are you?
+    noMatchPrompt1:
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: I could not find that stop. Try saying "Search by intersection"
+                  or "Search by points of interest" to find your stop another way.
+  required: true
+  type:
+    name: street_intersection
