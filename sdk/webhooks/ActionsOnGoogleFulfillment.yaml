@@ -3,11 +3,12 @@ handlers:
 - name: predict_poi
 - name: predict_number
 - name: set_bus_num_from_name
-- name: validate_bus_num
-- name: validate_bus_dir
-- name: get_route_directions
 - name: override_bus_stop_type
 - name: validate_bus_stop
+- name: get_route_directions
+- name: validate_bus_dir
+- name: predict_number_from_intent
+- name: validate_bus_num
 httpsEndpoint:
-  baseUrl: https://01ed4e33499d.ngrok.io/cta-bus-tracker-73811/us-central1/ActionsOnGoogleFulfillment
+  baseUrl: https://faae94207533.ngrok.io/cta-bus-tracker-73811/us-central1/ActionsOnGoogleFulfillment
   endpointApiVersion: 2

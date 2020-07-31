@@ -1,6 +1,8 @@
 conditionalEvents:
 - condition: scene.slots.status == "FINAL"
   transitionToScene: RequestBusStop
+onEnter:
+  webhookHandler: get_route_directions
 onSlotUpdated:
   webhookHandler: validate_bus_dir
 slots:
@@ -9,7 +11,12 @@ slots:
   name: bus_dir
   promptSettings:
     initialPrompt:
-      webhookHandler: get_route_directions
+      staticPrompt:
+        candidates:
+        - promptResponse:
+            firstSimple:
+              variants:
+              - speech: Are you $session.params.route_directions[0] or $session.params.route_directions[1]?
     noMatchPrompt1:
       staticPrompt:
         candidates:

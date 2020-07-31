@@ -42,10 +42,9 @@ app.handle('validate_bus_num', async (conv) => {
 })
 
 app.handle('get_route_directions', async (conv) => {
-  let ROUTE = '&rt=' + conv.session.params.bus_num;
-  let API_PATH = '/getdirections' + API_KEY + ROUTE + JSON_FORMAT;
-
   if(!('route_directions' in conv.session.params)){
+    let ROUTE = '&rt=' + conv.session.params['bus_num'];
+    let API_PATH = '/getdirections' + API_KEY + ROUTE + JSON_FORMAT;
     let temp_route_directions = await api.getRouteDirections(API_PATH);
     if('msg' in temp_route_directions){
       conv.add(temp_route_directions.msg + '. Please try again later.');
@@ -55,25 +54,24 @@ app.handle('get_route_directions', async (conv) => {
     conv.session.params.route_directions = temp_route_directions;
   }
   conv.overwrite = false;
-  conv.add('Are you ' + conv.session.params.route_directions[0] + ' or ' + conv.session.params.route_directions[1] + '?');
 });
 
 app.handle('validate_bus_dir', (conv) => {
   conv.overwrite = false;
-  if(!(conv.session.params.route_directions.includes(conv.scene.slots['bus_dir'].value))){
-    conv.add('Your request for the ' + conv.scene.slots['bus_dir'].value + ' ' + conv.session.params.bus_num + ' is not valid. Please try another direction.');
+  if(!(conv.session.params['route_directions'].includes(conv.scene.slots['bus_dir'].value))){
+    conv.add('Your request for the ' + conv.scene.slots['bus_dir'].value + ' ' + conv.session.params['bus_num'] + ' is not valid. Please try another direction.');
     conv.scene.slots['bus_dir'].status = 'INVALID';
   }
 })
 
 app.handle('override_bus_stop_type', (conv) => {
-  let ROUTE = '&rt=' + conv.session.params.bus_num;
-  let DIRECTION = '&dir=' + conv.session.params.bus_dir;
+  let ROUTE = '&rt=' + conv.session.params['bus_num'];
+  let DIRECTION = '&dir=' + conv.session.params['bus_dir'];
   let API_PATH = '/getstops' + API_KEY + ROUTE + DIRECTION + JSON_FORMAT;
 
+  conv.overwrite = false;
   return axios.get(API_PATH)
   .then(response => {
-    conv.overwrite = false;
     conv.session.params.stops = response.data['bustime-response'].stops;
     return conv.session.params.stops;
   }).catch(() => {
@@ -91,20 +89,44 @@ app.handle('override_bus_stop_type', (conv) => {
   });
 });
 app.handle('validate_bus_stop', (conv) => {
-  let index = helpers.getStopIndex(conv.session.params.stops, conv.scene.slots['bus_stop'].value);
-  if(index < 0){
-    conv.add('The stop ' + conv.session.params.bus_stop + ' does not exist. Let\'s try to find your stop by intersection.');
-    conv.scene.slots['bus_stop'].status = 'INVALID';
+  if(!('bus_num' in conv.session.params)){
+    conv.scene.next.name = 'RequestBusNumber';
+  } else if(!('bus_dir' in conv.session.params)){
+    conv.scene.next.name = 'RequestBusDirection';
   }
-  conv.session.params.stopIndex = index;
+  conv.overwrite = false;
+  if(conv.scene.slots['bus_stop'].updated == true){
+    let index = helpers.getStopIndex(conv.session.params.stops, conv.scene.slots['bus_stop'].value);
+    if(index < 0){
+      conv.add('The stop ' + conv.scene.slots['bus_stop'].value + ' does not exist. Let\'s try to find your stop by intersection.');
+      conv.scene.slots['bus_stop'].status = 'INVALID';
+    }
+    conv.session.params.stopIndex = index;
+  }
 });
 
-app.handle('predict_number', (conv) =>{  
-
+app.handle('predict_number', (conv) =>{
+  conv.overwrite = false;
   conv.add('You are looking for the stop ' + conv.session.params.bus_stop);
   conv.add('It is at the index ' + conv.session.params.stopIndex);
-  //use stop index to get stop id (conv.session.params.stopIndex) and make another request for predictions
-
 });
 
+app.handle('predict_number_from_intent', (conv) =>{
+  conv.overwrite = false;
+  if(!('bus_dir' in conv.intent.params)){
+    conv.scene.next.name = 'RequestBusDirection';
+    return;
+  } else { //bus_dir exists
+    conv.session.params['bus_dir'] = conv.intent.params['bus_dir'].resolved;
+    if(!('bus_stop' in conv.intent.params)){
+      conv.scene.next.name = 'RequestBusStop';
+      return;
+    } else{ //bus_stop exists
+      conv.session.params['bus_stop'] = conv.intent.params['bus_stop'].resolved;
+    }
+  }
+  conv.add('You are looking for the ' + conv.intent.params['bus_dir'].resolved + ' ' + conv.intent.params['bus_num'].resolved + ' at ' + conv.intent.params['bus_stop'].resolved);
+  //conv.add('You are looking for the stop ' + conv.session.params.bus_stop);
+  //conv.add('It is at the index ' + conv.session.params.stopIndex);
+});
 exports.ActionsOnGoogleFulfillment = functions.https.onRequest(app);

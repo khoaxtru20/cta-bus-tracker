@@ -1,6 +1,8 @@
 conditionalEvents:
-- condition: scene.slots.status == "FINAL"
-  transitionToScene: RequestBusDirection
+- condition: scene.slots.status=="FINAL"
+  handler:
+    webhookHandler: predict_number_from_intent
+  transitionToScene: actions.scene.END_CONVERSATION
 intentEvents:
 - handler:
     staticPrompt:
