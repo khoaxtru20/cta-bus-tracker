@@ -6,11 +6,15 @@ localizedSettings:
   developerEmail: khoaxtru16@gmail.com
   developerName: Khoa Truong
   displayName: Windy City Bus Tracker
-  fullDescription: Track CTA buses by providing the bus number and the direction you
-    are headed.
+  fullDescription: |-
+    It's easy to track CTA buses with the Windy City Bus Tracker. All you need is the route (bus) number, the direction you are headed. The prediction times are provided by the CTA and are always fresh. This is a beta version. Functionality is limited but is being improved. Suggestions are encouraged. Thank you for choosing Windy City Bus Tracker!
+
+    CTA Bus Tracker (SM) logo icon is a trademark of the Chicago Transit Authority.
+  privacyPolicyUrl: https://docs.google.com/document/d/1utnjFp_4BeQlCVH5E5O0xXEtea6zv-bnyEFTulc7T8Y/edit?usp=sharing
   pronunciation: Windy City Bus Tracker
   sampleInvocations:
   - Talk to Windy City Bus Tracker
+  - Talk to WCBT and track the Westbound 201 at Sheridan and Lincoln
   shortDescription: Get ETAs of CTA buses near you!
   smallLogoImage: https://lh3.googleusercontent.com/HfO08HFZJQqFOnWdSY4RQzo2pekk73ZnnMdSAu22LS5DU8GmIBQygB5VPAjxtqSmwmQa0A41CJOxBA
   voice: male_1

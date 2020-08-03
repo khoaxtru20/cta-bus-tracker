@@ -47,9 +47,34 @@ exports.createEntries = (stops) => {
  */
 exports.getStopIndex = function(stops, name) {
     for (var i = 0; i < stops.length; ++i){
-        if(stops[i].stpnm == name){
+        if(stops[i].stpnm === name){
             return i;
         }
     }
     return -1;
+}
+
+/**
+ * 
+ * @param {String} time e.g. "20200731 11:34"
+ * @return {String} 24H string formated to 12H 
+ */
+exports.formatTime = function(time){
+    let _time = time.split(" ")[1];             //"11:34"
+    console.log('This is the time: ' + _time);
+    let [_hour, _minu] = _time.split(":");      //_hour = 11, _minu = 34
+    let _meri = "AM";
+    switch(_hour <= 12){
+        case true:
+            if(_hour === 12){ _meri = "PM"; }
+            break;
+        case false:
+            _hour -= 12;
+            _meri = "PM";
+            break;
+    }
+    return _hour + ':' + _minu + ' ' + _meri;
+}
+exports.isError = function(response){
+    
 }

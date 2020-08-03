@@ -1,8 +1,5 @@
 regularExpression:
   entities:
-    8A:
-      regularExpressions:
-      - 8A
     49B:
       regularExpressions:
       - 49B
@@ -36,6 +33,9 @@ regularExpression:
     85A:
       regularExpressions:
       - 85A
+    8A:
+      regularExpressions:
+      - 8A
     111A:
       regularExpressions:
       - 111A
