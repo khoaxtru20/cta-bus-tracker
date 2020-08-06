@@ -30,6 +30,7 @@ slots:
             firstSimple:
               variants:
               - speech: At which stop are you?
+      webhookHandler: validate_bus_stop
     noMatchPrompt1:
       staticPrompt:
         candidates:

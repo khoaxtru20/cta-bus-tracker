@@ -1,16 +1,9 @@
 /**
  * 
- * @param {string} dir 
- * @return {string} direction with the first letter capitalized.
- */
-exports.dirToUpperCase = (dir) => {
-    return dir.charAt(0).toUpperCase() + dir.slice(1);
-}
-
-/**
- * 
- * @param {string} name 
- * @return {object} entry object with @prop name @prop synonyms
+ * @param {String} name - of stop
+ * @return {Object} Entry
+ * @prop Entry.name - name of stop
+ * @prop Entry.synonyms - alternate versions of the stop name
  */
 function createEntry(name){
     var _name = name.replace(/&/gi, "and");
@@ -28,8 +21,7 @@ function createEntry(name){
 /**
  * 
  * @param {Object[]} stops
- * @return {Object[]} entries for type override.
- * 
+ * @return {Object[]} Entries - array of entries for type override.
  */
 exports.createEntries = (stops) => {
     var _stops = [];
@@ -41,23 +33,25 @@ exports.createEntries = (stops) => {
 
 /**
  * 
- * @param {Object[]} stops 
- * @param {String} name
- * @return {int} index of the stop in the stop array or -1 if it does not exist.
+ * @param {Object} index - object to pass stop index by reference
+ * @prop {Number} index.is - the index of the stop in the stops array
+ * @param {Object[]} stops - array of stops
+ * @param {String} name - name of stop requested by user
  */
-exports.getStopIndex = function(stops, name) {
+exports.getStopIndex = function(index, stops, name) {
     for (var i = 0; i < stops.length; ++i){
         if(stops[i].stpnm === name){
-            return i;
+            index.is = i;
+            return;
         }
     }
-    return -1;
+    throw new Error(`The stop "${name}" does not exist`);
 }
 
 /**
  * 
  * @param {String} time e.g. "20200731 11:34"
- * @return {String} 24H string formated to 12H 
+ * @return {String} 24H string formated to 12H
  */
 exports.formatTime = function(time){
     let _time = time.split(" ")[1];             //"11:34"
@@ -74,7 +68,4 @@ exports.formatTime = function(time){
             break;
     }
     return _hour + ':' + _minu + ' ' + _meri;
-}
-exports.isError = function(response){
-    
 }

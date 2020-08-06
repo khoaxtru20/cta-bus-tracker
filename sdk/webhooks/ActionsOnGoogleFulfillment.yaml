@@ -10,5 +10,5 @@ handlers:
 - name: predict_number_from_intent
 - name: validate_bus_num
 httpsEndpoint:
-  baseUrl: https://us-central1-cta-bus-tracker-73811.cloudfunctions.net/ActionsOnGoogleFulfillment
+  baseUrl: https://bde223eb61a3.ngrok.io/cta-bus-tracker-73811/us-central1/ActionsOnGoogleFulfillment
   endpointApiVersion: 2
