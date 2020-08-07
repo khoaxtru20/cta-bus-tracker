@@ -1,0 +1,53 @@
+regularExpression:
+  entities:
+    8A:
+      regularExpressions:
+      - 8A
+    49B:
+      regularExpressions:
+      - 49B
+    52A:
+      regularExpressions:
+      - 52A
+    53A:
+      regularExpressions:
+      - 53A
+    54A:
+      regularExpressions:
+      - 54A
+    54B:
+      regularExpressions:
+      - 54B
+    55A:
+      regularExpressions:
+      - 55A
+    55N:
+      regularExpressions:
+      - 55N
+    62H:
+      regularExpressions:
+      - 62H
+    63W:
+      regularExpressions:
+      - 63W
+    81W:
+      regularExpressions:
+      - 81W
+    85A:
+      regularExpressions:
+      - 85A
+    111A:
+      regularExpressions:
+      - 111A
+    J14:
+      regularExpressions:
+      - J14
+    X9:
+      regularExpressions:
+      - X9
+    X49:
+      regularExpressions:
+      - X49
+    X98:
+      regularExpressions:
+      - X98

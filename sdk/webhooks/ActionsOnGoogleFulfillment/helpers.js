@@ -11,6 +11,7 @@ function createEntry(name){
         name: name,
         synonyms: [
             name,
+            name.split(" ").reverse().join(" "),
             _name,
             _name.split(" ").reverse().join(" ")
         ]
@@ -31,21 +32,34 @@ exports.createEntries = (stops) => {
     return _stops;
 }
 
+function sayDoesNotExist(prop, name){
+    let thing = "";
+    switch(prop){
+        case "rt":
+        case "rtnm":
+            thing = "Route";
+            break;
+        case "stpnm":
+            thing = "Stop";
+            break;
+    }
+    return `${thing} "${name}" does not exist`;
+}
 /**
  * 
- * @param {Object} index - object to pass stop index by reference
- * @prop {Number} index.is - the index of the stop in the stops array
- * @param {Object[]} stops - array of stops
- * @param {String} name - name of stop requested by user
+ * @param {Object} myObj - object to pass index by reference
+ * @prop {Number} myObj.index - the index of the object in the objects array
+ * @param {Object[]} stops - array of objects
+ * @param {String} name - name of object requested by user
  */
-exports.getStopIndex = function(index, stops, name) {
-    for (var i = 0; i < stops.length; ++i){
-        if(stops[i].stpnm === name){
-            index.is = i;
+exports.getIndex = function(myObj, objects, name, prop) {
+    for (var i = 0; i < objects.length; ++i){
+        if(objects[i][prop] === name){
+            myObj.index = i;
             return;
         }
     }
-    throw new Error(`The stop "${name}" does not exist`);
+    throw new Error(sayDoesNotExist(prop,name));
 }
 
 /**
@@ -55,7 +69,6 @@ exports.getStopIndex = function(index, stops, name) {
  */
 exports.formatTime = function(time){
     let _time = time.split(" ")[1];             //"11:34"
-    console.log('This is the time: ' + _time);
     let [_hour, _minu] = _time.split(":");      //_hour = 11, _minu = 34
     let _meri = "AM";
     switch(_hour <= 12){
@@ -68,4 +81,19 @@ exports.formatTime = function(time){
             break;
     }
     return _hour + ':' + _minu + ' ' + _meri;
+}
+
+/**
+ * 
+ * @param {String} name of bus stop
+ * @returns {String} Capitalized bus stop with "&" replaced if it exists. Needed for user input from global intent. \
+ * **Note:** User input must exactly match stop name or search will fail and Action will reprompt.
+ */
+exports.formatBusStop = function(name){
+    let _replaced = name.replace(/and/gi, "&").split(" ");
+    let _capitalized = [];
+    _replaced.forEach(word => {
+        _capitalized.push(word.charAt(0).toUpperCase() + word.slice(1));
+    });
+    return _capitalized.join(" ");
 }

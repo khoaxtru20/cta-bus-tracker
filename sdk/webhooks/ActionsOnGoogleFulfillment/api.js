@@ -1,20 +1,5 @@
 const axios = require('axios');
 axios.defaults.baseURL = 'http://www.ctabustracker.com/bustime/api/v2';
-
-/**
- * Helper API function to extract route IDs from the /getroutes request
- * @param {Object[]} data - An array of route objects
- * @prop {String} data.rt - Route ID 
- * @returns {String[]} A string array of route IDs
- */
-function createRouteList(data) {
-    let _routes =  [];
-    data.forEach(rt => {
-        _routes.push(rt['rt']);
-    });
-    return _routes;
-}
-
 /**
  * Calls /getroutes
  * @param {Object[]} routes Array to save the routes
@@ -28,7 +13,8 @@ exports.getRoutes = function(routes,path){
             if('error' in response.data['bustime-response']){
                 throw new Error(response.data['bustime-response'].error[0].msg);
             } 
-            routes.push.apply(routes, createRouteList(response.data['bustime-response']['routes']));
+            routes.push.apply(routes, response.data['bustime-response']['routes']);
+            return Promise.resolve(`/getroutes promise resolved`);
         }).catch((error) => {
             throw new Error(`/getroutes promise rejected: ${error.message}`);
         });
@@ -60,20 +46,22 @@ exports.getRouteDirections = function(directions,path){
                 throw new Error(response.data['bustime-response'].error[0].msg);
             }
             directions.push.apply(directions, createRouteDirections(response.data['bustime-response']['directions']));
+            return Promise.resolve(`/getdirections promise resolved`);
         }).catch((error) => {
             throw new Error(`/getdirections promise rejected: ${error.message}`);
         });
 
 }
-exports.getPredictions = function(path){
+exports.getPredictions = function(predictions, path){
     return axios.get(path)
     .then(response => {
         if('error' in response.data['bustime-response']){
-            return response.data['bustime-response'].error[0];
+            throw new Error(response.data['bustime-response'].error[0].msg);
         }
-        return response.data['bustime-response']['prd'];
+        predictions.push.apply(predictions, response.data['bustime-response']['prd']);
+        return Promise.resolve(`/getpredictions promise resolved`);
     }).catch(() => {
-        return new Error('External API call rejected while getting predictions.');
+        throw new Error(`/getpredictions promise rejected: ${error.message}`);
     });
 }
 exports.getStops = function(stops,path){
@@ -83,6 +71,7 @@ exports.getStops = function(stops,path){
                 throw new Error(response.data['bustime-response'].error[0].msg);
             }
             stops.push.apply(stops,response.data['bustime-response'].stops);
+            return Promise.resolve(`/getstops promise resolved`);
         }).catch((error) => {
             throw new Error(`/getstops promise rejected: ${error.message}`);
         });

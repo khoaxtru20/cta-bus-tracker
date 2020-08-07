@@ -1,7 +1,5 @@
 conditionalEvents:
 - condition: scene.slots.status=="FINAL"
-  handler:
-    webhookHandler: predict_number_from_intent
   transitionToScene: RequestBusDirection
 intentEvents:
 - handler:
@@ -19,9 +17,9 @@ intentEvents:
       - promptResponse:
           firstSimple:
             variants:
-            - speech: Ok! Let's search for your route by ID.
-  intent: SEARCH_SPECIAL_NUMBER
-  transitionToScene: RequestSpecialBusNumber
+            - speech: Ok! Let's search for your bus by ID.
+  intent: SEARCH_BUS_ID
+  transitionToScene: RequestBusID
 onSlotUpdated:
   webhookHandler: validate_bus_num
 slots:
@@ -42,9 +40,9 @@ slots:
         - promptResponse:
             firstSimple:
               variants:
-              - speech: I do not recognize that route number. Try another number or
-                  say "Search by Name" to find your bus by name. If your route includes
-                  letters like "X49", say "Search special routes".
+              - speech: I do not recognize that as a route. Try another number or
+                  say "Search by name" to find your bus by name. If your route includes
+                  letters like "X49", say "Search by bus ID".
   required: true
   type:
     name: actions.type.Number

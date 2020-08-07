@@ -10,8 +10,8 @@ intentEvents:
   transitionToScene: RequestPOI
 - intent: SEARCH_BY_ROUTE_NAME
   transitionToScene: RequestBusName
-- intent: SEARCH_SPECIAL_NUMBER
-  transitionToScene: RequestSpecialBusNumber
+- intent: SEARCH_BUS_ID
+  transitionToScene: RequestBusID
 onEnter:
   webhookHandler: override_bus_stop_type
 onSlotUpdated:
@@ -19,8 +19,6 @@ onSlotUpdated:
 slots:
 - commitBehavior:
     writeSessionParam: bus_stop
-  defaultValue:
-    sessionParam: bus_stop_from_intent
   name: bus_stop
   promptSettings:
     initialPrompt:
@@ -30,7 +28,6 @@ slots:
             firstSimple:
               variants:
               - speech: At which stop are you?
-      webhookHandler: validate_bus_stop
     noMatchPrompt1:
       staticPrompt:
         candidates:
