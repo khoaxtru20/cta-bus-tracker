@@ -32,34 +32,35 @@ exports.createEntries = (stops) => {
     return _stops;
 }
 
-function sayDoesNotExist(prop, name){
-    let thing = "";
+function sayDoesNotExist(prop, theUserRequested){
+    let thisThing = "";
     switch(prop){
         case "rt":
         case "rtnm":
-            thing = "Route";
+            thisThing = "Route";
             break;
         case "stpnm":
-            thing = "Stop";
+            thisThing = "Stop";
             break;
     }
-    return `${thing} "${name}" does not exist`;
+    return `${thisThing} "${theUserRequested}" does not exist`;
 }
 /**
  * 
- * @param {Object} myObj - object to pass index by reference
- * @prop {Number} myObj.index - the index of the object in the objects array
- * @param {Object[]} stops - array of objects
- * @param {String} name - name of object requested by user
+ * @param {Object} myObj - variable to save the index
+ * @prop {Number} myObj.index - index of query in objects array
+ * @prop {String} myObj.query - name of object requested by user
+ * @prop {String} myObj.prop - name of property (e.g. "rt", "dir", "stpnm")
+ * @param {Object[]} objects - array of objects (e.g. routes, directions, stops...)
  */
-exports.getIndex = function(myObj, objects, name, prop) {
+exports.getIndex = function(myObj, objects) {
     for (var i = 0; i < objects.length; ++i){
-        if(objects[i][prop] === name){
+        if(objects[i][myObj.prop] === myObj.query){
             myObj.index = i;
             return;
         }
     }
-    throw new Error(sayDoesNotExist(prop,name));
+    throw new Error(sayDoesNotExist(myObj.prop,myObj.query));
 }
 
 /**

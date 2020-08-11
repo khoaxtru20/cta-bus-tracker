@@ -18,16 +18,18 @@ const functions = require('firebase-functions');
 const api = require('./api.js');
 const helpers = require('./helpers.js');
 
-const app = conversation({debug: true});
+const app = conversation({debug: false});
 const API_KEY = `/?key=${functions.config().ctabustracker.key}`;
 const JSON_FORMAT = '&format=json';
 
 
 app.handle('validate_bus_num', async (conv) => {
-  conv.overwrite = false;
-
   let _routes = [];
-  let myRoute = {index: 0};
+  let myRoute = {
+    index: 0,
+    query: (conv.scene.slots['bus_num'].value).toString(),
+    prop: "rt"
+  };
   //If session param doesn't exist, make it exist
   if(!('routes' in conv.session.params)) {
     try{
@@ -42,18 +44,21 @@ app.handle('validate_bus_num', async (conv) => {
       return;
     }
   }
+  //Error Checking
   if(conv.intent.query === (conv.intent.params['bus_num'].resolved).toString()){ //assumes user input is strictly a number or ID (i.e. no extraneous input). Action will reprompt if not.
     try{
-      helpers.getIndex(myRoute, conv.session.params['routes'], (conv.scene.slots['bus_num'].value).toString(), "rt")
+      helpers.getIndex(myRoute, conv.session.params['routes']);
+      conv.session.params['routeIndex'] = myRoute.index;
     } catch(error) {
       conv.add(`${error.message}. Please try another bus number.`);
       conv.scene.slots['bus_num'].status = 'INVALID';
     }
   } else{ //user said bus ID instead of bus number (e.g. query: "55N" !== resolved: 55)
       try{
-        helpers.getIndex(myRoute, conv.session.params['routes'], conv.intent.query, "rt");
+        myRoute.query = (conv.intent.query).toUpperCase();
+        helpers.getIndex(myRoute, conv.session.params['routes']);
         conv.session.params['routeIndex'] = myRoute.index;
-        conv.session.params['bus_num'] = conv.intent.query;
+        conv.session.params['bus_num'] = myRoute.query;
         conv.scene.next.name = 'RequestBusDirection';
       } catch(error) {
         conv.add(`${error.message}. Please try another bus ID.`);
@@ -63,8 +68,6 @@ app.handle('validate_bus_num', async (conv) => {
 })
 
 app.handle('get_route_directions', async (conv) => {
-  conv.overwrite = false;
-
   let _directions = [];
   if(!('route_directions' in conv.session.params)){
     try{
@@ -79,8 +82,6 @@ app.handle('get_route_directions', async (conv) => {
 });
 
 app.handle('validate_bus_dir', (conv) => {
-  conv.overwrite = false;
-
   if(!(conv.session.params['route_directions'].includes(conv.scene.slots['bus_dir'].value))){
     conv.add(
       
@@ -93,8 +94,6 @@ Please try another direction.`
 })
 
 app.handle('override_bus_stop_type', async (conv) => {
-  conv.overwrite = false;
-
   let _stops = [];
   try{
     let ROUTE = `&rt=${conv.session.params['bus_num']}`;
@@ -115,40 +114,37 @@ app.handle('override_bus_stop_type', async (conv) => {
 });
 
 app.handle('validate_bus_info', (conv) =>{
-  conv.overwrite = false;
-  if('bus_num' in conv.intent.params){
-    if('bus_dir' in conv.intent.params){
-      if('bus_stop' in conv.intent.params){
-        conv.session.params['bus_num'] = conv.intent.params['bus_num'].resolved; //assumes user input is strictly correct (i.e. input is not validated)
-        conv.session.params['bus_dir'] = conv.intent.params['bus_dir'].resolved; //assumes user input is strictly correct (i.e. input is not validated)
-        conv.scene.next.name = 'RequestBusStop';                                 //assumes user input is strictly correct (i.e. input is not validated)
-        return;
-      }
-      conv.scene.next.name = 'RequestBusDirection';
+  if('bus_dir' in conv.intent.params){
+    if('bus_stop' in conv.intent.params){
+      conv.session.params['bus_num'] = conv.intent.params['bus_num'].resolved; //assumes user input is strictly correct (i.e. input is not validated)
+      conv.session.params['bus_dir'] = conv.intent.params['bus_dir'].resolved; //assumes user input is strictly correct (i.e. input is not validated)
+      conv.scene.next.name = 'RequestBusStop';                                 //assumes user input is strictly correct (i.e. input is not validated)
+      return;
     }
-  } //else continue to 'RequestBusNumber'
+    conv.scene.next.name = 'RequestBusDirection';
+  }
 });
 
 app.handle('validate_bus_stop', (conv) => {
-  conv.overwrite = false;
-  
-  let myStop = {index: 0};
-  if('value' in conv.scene.slots['bus_stop']){
+  // if('value' in conv.scene.slots['bus_stop']){
+    let myStop = {
+      index: 0,
+      query: helpers.formatBusStop(conv.scene.slots['bus_stop'].value),
+      prop: "stpnm"
+    };
     try{
-      helpers.getIndex(myStop, conv.session.params['stops'], helpers.formatBusStop(conv.scene.slots['bus_stop'].value), "stpnm"); 
+      //Slot value needs to be formatted if user input is from global intent. Otherwise, slot value will be resolved by matching user input to type overrides.
+      helpers.getIndex(myStop, conv.session.params['stops']); 
       conv.session.params['stopIndex'] = myStop.index;
     } catch (error) {
       conv.add(`${error.message}. Please try again.`);
       conv.scene.slots['bus_stop'].status = 'INVALID'; //reprompt for bus_stop
-      conv.session.params['bus_stop'] = null; //remove session param bus_stop
-      conv.session.params['stopIndex'] = null; //remove session param stopIndex
+      conv.session.params['stopIndex'] = null; //reset session param stopIndex
     }
-  }
+  // }
 });
 
 app.handle('predict_number', async (conv) =>{
-  conv.overwrite = false;
-
   let predictions = [];
   try{
     let STPID = `&stpid=${conv.session.params['stops'][conv.session.params['stopIndex']].stpid}`;
