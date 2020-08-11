@@ -19,12 +19,30 @@ const axios = require('axios');
 const api = require('./api.js');
 const helpers = require('./helpers.js');
 
-const app = conversation({debug: true});
+const app = conversation({debug: false});
 const API_KEY = '/?key=' + functions.config().ctabustracker.key;
 const JSON_FORMAT = '&format=json';
 axios.defaults.baseURL = 'http://www.ctabustracker.com/bustime/api/v2';
 
-app.handle('validate_bus_num', async (conv) => {
+app.handle('override_bus_ID_type', async (conv) => {
+  let temp_routes = await api.getRoutes('/getroutes' + API_KEY + JSON_FORMAT);
+  if('msg' in temp_routes){
+    conv.add(temp_routes.msg + '. Please try again later.');
+    conv.scene.next.name = 'actions.scene.END_CONVERSATION';
+    return;
+  }
+  conv.session.params.routes = temp_routes;
+
+  conv.session.typeOverrides = [{
+    name: 'bus_ID',
+    mode: 'TYPE_REPLACE',
+    synonym: {
+      entries: helpers.createRouteEntries(temp_routes)
+      }
+  }];
+})
+app.handle('validate_bus_num', (conv) => {
+/* 
   if(!('routes' in conv.session.params)) {
     let temp_routes = await api.getRoutes('/getroutes' + API_KEY + JSON_FORMAT);
     if('msg' in temp_routes){
@@ -36,8 +54,18 @@ app.handle('validate_bus_num', async (conv) => {
   }
   conv.overwrite = false;
   if(!(conv.session.params.routes.includes((conv.scene.slots['bus_num'].value).toString()))){
-    conv.add('Route ' + conv.scene.slots['bus_num'].value + ' does not exist. Please try another number.');
-    conv.scene.slots['bus_num'].status = 'INVALID';
+    if(conv.session.params.routes.includes(conv.intent.params['bus_num'].original)){
+      conv.session.params.bus_name = conv.intent.params['bus_num'].original;
+      conv.scene.next.name = 'RequestBusDirection';
+    } else {
+      conv.add('Route ' + conv.scene.slots['bus_num'].value + ' does not exist. Please try another number.');
+      conv.scene.slots['bus_num'].status = 'INVALID';
+    }
+  }
+*/
+  if(helpers.getRouteIndex(conv.session.params.routes, conv.scene.slots['bus_ID'].value) < 0){
+    conv.add('Route ' + conv.scene.slots['bus_ID'].value + ' does not exist. Please try another number.');
+    conv.scene.slots['bus_ID'].status = 'INVALID';
   }
 })
 
@@ -79,7 +107,7 @@ app.handle('override_bus_stop_type', async (conv) => {
     name: 'bus_stop',
     mode: 'TYPE_REPLACE',
     synonym: {
-      entries: helpers.createEntries(temp_stops)
+      entries: helpers.createStopEntries(temp_stops)
       }
   }];
   conv.session.params.stops = temp_stops;

@@ -12,7 +12,7 @@ exports.dirToUpperCase = (dir) => {
  * @param {string} name 
  * @return {object} entry object with @prop name @prop synonyms
  */
-function createEntry(name){
+function createStopEntry(name){
     var _name = name.replace(/&/gi, "and");
     var entry = {
         name: name,
@@ -24,21 +24,38 @@ function createEntry(name){
     }
     return entry;
 }
-
+function createRouteEntry(routeObj){
+    var entry = {
+        name: routeObj.rt,
+        synonyms: [
+            routeObj.rt,
+            routeObj.rtnm,
+            routeObj.rtnm.replace(/[^\w\s]/gi, " ").replace(/\s{2}/gi, " ") //replace all punctuation with a space then remove any double spaces
+        ]
+    }
+    return entry;
+}
 /**
  * 
  * @param {Object[]} stops
  * @return {Object[]} entries for type override.
  * 
  */
-exports.createEntries = (stops) => {
+exports.createStopEntries = (stops) => {
     var _stops = [];
     stops.forEach(stop => {
-        _stops.push(createEntry(stop.stpnm));
+        _stops.push(createStopEntry(stop.stpnm));
     })
     return _stops;
 }
 
+exports.createRouteEntries = (routes) => {
+    var _routes = [];
+    routes.forEach(route => {
+        _routes.push(createRouteEntry(route));
+    })
+    return _routes;
+}
 /**
  * 
  * @param {Object[]} stops 
@@ -54,6 +71,14 @@ exports.getStopIndex = function(stops, name) {
     return -1;
 }
 
+exports.getRouteIndex = function(routes, name) {
+    for (var i = 0; i < routes.length; ++i){
+        if(routes[i].rt === name){
+            return i;
+        }
+    }
+    return -1;
+}
 /**
  * 
  * @param {String} time e.g. "20200731 11:34"

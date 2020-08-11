@@ -14,7 +14,7 @@ return axios.get(path)
     if('error' in response.data['bustime-response']){
         return response.data['bustime-response'].error[0];
     } 
-    return createRouteList(response.data['bustime-response']['routes']);
+    return response.data['bustime-response']['routes'];
     }).catch(() => {
     return new Error('External API call rejected while getting routes.');
     });

@@ -106,4 +106,5 @@ dist
 #Firebase files
 .firebaserc
 .firebase
-sdk/webhooks/ActionsOnGoogleFulfillment/.runtimeconfig.json
+functions/test
+functions/.runtimeconfig.json

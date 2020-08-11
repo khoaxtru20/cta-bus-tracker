@@ -11,10 +11,23 @@ intentEvents:
             - speech: Ok! Let's search routes by name.
   intent: SEARCH_BY_ROUTE_NAME
   transitionToScene: RequestBusName
+- handler:
+    staticPrompt:
+      candidates:
+      - promptResponse:
+          firstSimple:
+            variants:
+            - speech: Ok! Let's search for the bus number.
+  intent: SEARCH_BY_NUMBER
+  transitionToScene: RequestBusNumber
+onSlotUpdated:
+  webhookHandler: validate_bus_num
 slots:
 - commitBehavior:
-    writeSessionParam: bus_num_special
-  name: bus_num_special
+    writeSessionParam: bus_num
+  defaultValue:
+    sessionParam: rerouted_bus_ID
+  name: bus_num
   promptSettings:
     initialPrompt:
       staticPrompt:
@@ -30,7 +43,7 @@ slots:
             firstSimple:
               variants:
               - speech: I do not recognize that bus ID. If you cannot find your route,
-                  try saying "Search by route name".
+                  try saying "Search by route name" or "Search by bus number".
   required: true
   type:
-    name: bus_number_special
+    name: bus_ID
