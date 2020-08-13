@@ -17,7 +17,9 @@ onEnter:
 onSlotUpdated:
   webhookHandler: validate_bus_stop
 slots:
-- name: bus_stop
+- defaultValue:
+    sessionParam: bus_stop_from_intent
+  name: bus_stop
   promptSettings:
     initialPrompt:
       staticPrompt:

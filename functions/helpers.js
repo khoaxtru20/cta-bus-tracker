@@ -86,7 +86,6 @@ exports.getRouteIndex = function(routes, name) {
  */
 exports.formatTime = function(time){
     let _time = time.split(" ")[1];             //"11:34"
-    console.log('This is the time: ' + _time);
     let [_hour, _minu] = _time.split(":");      //_hour = 11, _minu = 34
     let _meri = "AM";
     switch(_hour <= 12){

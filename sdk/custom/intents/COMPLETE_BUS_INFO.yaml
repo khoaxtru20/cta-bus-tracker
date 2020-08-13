@@ -1,7 +1,7 @@
 parameters:
 - name: bus_num
   type:
-    name: actions.type.Number
+    name: bus_ID
 - name: bus_dir
   type:
     name: cardinal_direction
@@ -9,28 +9,30 @@ parameters:
   type:
     name: bus_stop
 trainingPhrases:
-- track bus ($bus_num '79' auto=true) going ($bus_dir 'south' auto=true) at ($bus_stop
-  '$street and $street' auto=true)
-- predict the next ($bus_dir 'west' auto=true) ($bus_num '83' auto=true) bus at ($bus_stop
-  '$street and $street' auto=true)
-- find the ($bus_dir 'eastbound' auto=true) ($bus_num '3' auto=false) at ($bus_stop
-  '$street and $street' auto=true)
-- track the ($bus_dir 'northbound' auto=true) ($bus_num '64' auto=false) at ($bus_stop
-  '$street and $street' auto=true)
-- tell me when bus ($bus_num '50' auto=true) will arrive at ($bus_stop '$street and
-  $street' auto=false)
-- get me predictions for the ($bus_dir 'westbound' auto=true) ($bus_num '97' auto=false)
-  route at ($bus_stop '$street and $street' auto=false)
-- get me predictions for bus ($bus_num '26' auto=true) headed ($bus_dir 'south' auto=false) at
-  ($bus_stop '$street and $street' auto=false)
-- get an estimate for bus ($bus_num '1' auto=true) at ($bus_stop '$poi' auto=false)
-- get an estimated time of arrival for route ($bus_num '84' auto=true) at ($bus_stop
-  '$street and $street' auto=false)
-- predict when the next ($bus_num '63' auto=false) bus will be here
-- get an estimated time of arrival for the ($bus_dir 'eastbound' auto=true) ($bus_num
-  '74' auto=false) at ($bus_stop '$street and $street' auto=false)
-- find out when bus ($bus_num '111' auto=true) is coming to ($bus_stop '$street and
-  $street' auto=false)
-- get an eta for bus number ($bus_num '147' auto=true) going ($bus_dir 'north' auto=true) at
-  ($bus_stop '$poi' auto=false)
-- get an eta for route ($bus_num '201' auto=true) at ($bus_stop '$poi' auto=false)
+- track bus ($bus_num '$80' auto=false) going ($bus_dir 'south' auto=true) at ($bus_stop
+  '$Lincoln and $Sheridan' auto=false)
+- predict the next ($bus_dir 'west' auto=true) ($bus_num '$X9' auto=false) bus at
+  ($bus_stop '$55th Street and $Halsted' auto=false)
+- find the ($bus_num '$111' auto=false) bus going ($bus_dir 'east' auto=false) at
+  ($bus_stop '$79th Street and $Union' auto=false)
+- track the ($bus_dir 'northbound' auto=true) ($bus_num '$8A' auto=false) at ($bus_stop
+  '$Chicago and $Western' auto=false)
+- tell me when bus ($bus_num '$201' auto=false) will arrive at ($bus_stop '$65th Street
+  and $Sacramento' auto=false)
+- get me predictions for the ($bus_dir 'westbound' auto=true) ($bus_num '$30' auto=false) route
+  at ($bus_stop '$Lowe and $127th Street' auto=false)
+- get me predictions for bus ($bus_num '$Laramie' auto=false) headed ($bus_dir 'south'
+  auto=false) at ($bus_stop '$Marquette and $Indiana' auto=false)
+- get an estimate for the ($bus_num '$West 65th' auto=false) route at ($bus_stop '$12100
+  S Halsted' auto=false)
+- get an estimated time of arrival for route ($bus_num '$LaSalle' auto=false) at ($bus_stop
+  '$12243 S Avenue O' auto=false)
+- predict when the next ($bus_num '$147' auto=false) bus will be here
+- get an estimated time of arrival for the ($bus_dir 'eastbound' auto=true) ($bus_num
+  '$74' auto=false) at ($bus_stop '$street and $street' auto=false)
+- find out when bus ($bus_num '$11' auto=false) is coming to ($bus_stop '$E Hyde Park
+  & Drexel' auto=false)
+- get an eta for bus number ($bus_num '$22' auto=false) going ($bus_dir 'north' auto=true) at
+  ($bus_stop '$Clark and Barry/Halsted' auto=false)
+- get an eta for the ($bus_num '$Addison' auto=false) route at ($bus_stop '$Roosevelt
+  Orange/Red/Green Line Station' auto=false)

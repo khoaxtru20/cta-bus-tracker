@@ -1,53 +1,93 @@
-regularExpression:
+synonym:
   entities:
+    "8":
+      synonyms:
+      - "8"
     8A:
-      regularExpressions:
+      synonyms:
       - 8A
+    "9":
+      synonyms:
+      - "9"
+    X9:
+      synonyms:
+      - X9
+    "14":
+      synonyms:
+      - "14"
+    J14:
+      synonyms:
+      - J14
+    "49":
+      synonyms:
+      - "49"
     49B:
-      regularExpressions:
+      synonyms:
       - 49B
+    "52":
+      synonyms:
+      - "52"
     52A:
-      regularExpressions:
+      synonyms:
       - 52A
+    "53":
+      synonyms:
+      - "53"
     53A:
-      regularExpressions:
+      synonyms:
       - 53A
+    "54":
+      synonyms:
+      - "54"
     54A:
-      regularExpressions:
+      synonyms:
       - 54A
     54B:
-      regularExpressions:
+      synonyms:
       - 54B
+    "55":
+      synonyms:
+      - "55"
     55A:
-      regularExpressions:
+      synonyms:
       - 55A
     55N:
-      regularExpressions:
+      synonyms:
       - 55N
+    "62":
+      synonyms:
+      - "62"
     62H:
-      regularExpressions:
+      synonyms:
       - 62H
+    "63":
+      synonyms:
+      - "63"
     63W:
-      regularExpressions:
+      synonyms:
       - 63W
-    81W:
-      regularExpressions:
-      - 81W
-    85A:
-      regularExpressions:
-      - 85A
-    111A:
-      regularExpressions:
-      - 111A
-    J14:
-      regularExpressions:
-      - J14
-    X9:
-      regularExpressions:
-      - X9
     X49:
-      regularExpressions:
+      synonyms:
       - X49
+    "81":
+      synonyms:
+      - "81"
+    81W:
+      synonyms:
+      - 81W
+    "85":
+      synonyms:
+      - "85"
+    85A:
+      synonyms:
+      - 85A
     X98:
-      regularExpressions:
+      synonyms:
       - X98
+    "111":
+      synonyms:
+      - "111"
+    111A:
+      synonyms:
+      - 111A
+  matchType: EXACT_MATCH

@@ -20,12 +20,16 @@ intentEvents:
             - speech: Ok! Let's search for your bus by ID.
   intent: SEARCH_BUS_ID
   transitionToScene: RequestBusID
+onEnter:
+  webhookHandler: override_bus_ID_type
 onSlotUpdated:
   webhookHandler: validate_bus_num
 slots:
 - commitBehavior:
     writeSessionParam: bus_num
-  name: bus_num
+  defaultValue:
+    sessionParam: bus_num_from_intent
+  name: bus_ID
   promptSettings:
     initialPrompt:
       staticPrompt:
@@ -33,16 +37,7 @@ slots:
         - promptResponse:
             firstSimple:
               variants:
-              - speech: What is the bus number?
-    noMatchPrompt1:
-      staticPrompt:
-        candidates:
-        - promptResponse:
-            firstSimple:
-              variants:
-              - speech: I do not recognize that as a route. Try another number or
-                  say "Search by name" to find your bus by name. If your route includes
-                  letters like "X49", say "Search by bus ID".
+              - speech: What is the bus number or route name?
   required: true
   type:
-    name: actions.type.Number
+    name: bus_ID

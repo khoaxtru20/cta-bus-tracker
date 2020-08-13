@@ -11,12 +11,7 @@ slots:
   name: bus_dir
   promptSettings:
     initialPrompt:
-      staticPrompt:
-        candidates:
-        - promptResponse:
-            firstSimple:
-              variants:
-              - speech: Are you $session.params.route_directions[0] or $session.params.route_directions[1]?
+      webhookHandler: ask_for_directions
     noMatchPrompt1:
       staticPrompt:
         candidates:
