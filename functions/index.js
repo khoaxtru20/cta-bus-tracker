@@ -57,6 +57,7 @@ app.handle('validate_bus_num', (conv) => {
   if(index < 0){
     conv.add('Route ' + conv.scene.slots['bus_ID'].value + ' does not exist. Please try another number.');
     conv.scene.slots['bus_ID'].status = 'INVALID';
+    conv.scene.next.name = 'RequestBusNumber'; //needed for entry from global intent
   } else{
     conv.session.params.bus_num = conv.session.params.routes[index];
     conv.session.params.routes = null;
@@ -96,6 +97,7 @@ app.handle('validate_bus_dir', (conv) => {
   if(!(conv.session.params['route_directions'].includes(conv.scene.slots['bus_dir'].value))){
     conv.add('Your request for the ' + conv.scene.slots['bus_dir'].value + ' ' + conv.session.params['bus_num'].rt + ' is not valid. Please try another direction.');
     conv.scene.slots['bus_dir'].status = 'INVALID';
+    conv.scene.next.name = 'RequestBusDirection'; //needed for entry from global intent
   } else{
     conv.session.params.route_directions = null;
   }
@@ -136,7 +138,7 @@ app.handle('validate_bus_stop', (conv) => {
     if(index < 0){
       conv.add('The stop ' + conv.scene.slots['bus_stop'].value + ' does not exist. Please try another stop.');
       conv.scene.slots['bus_stop'].status = 'INVALID';
-      conv.scene.next.name = 'RequestBusStop';
+      conv.scene.next.name = 'RequestBusStop'; //needed for entry from global intent
     } else{
       conv.session.params.bus_stop = conv.session.params.stops[index];
       conv.session.params.stops = null;
@@ -167,12 +169,12 @@ app.handle('predict_number', async (conv) =>{
   }
 });
 
-app.handle('validate_bus_info', async (conv) =>{
+app.handle('validate_bus_info', (conv) =>{
   if('bus_num' in conv.intent.params){
-    conv.session.params['bus_num_from_intent'] = conv.intent.params['bus_num'].resolved; //strictly assumes correct bus ID (!name)
+    conv.session.params['bus_num_from_intent'] = conv.intent.params['bus_num'].resolved;
   }
   if('bus_stop' in conv.intent.params){
-    conv.session.params['bus_stop_from_intent'] = conv.intent.params['bus_stop'].resolved; //strictly assumes correct bus stop (e.g. Sheridan & Jarvis not sheridan and jarvis)
+    conv.session.params['bus_stop_from_intent'] = conv.intent.params['bus_stop'].resolved;
   }
   conv.session.params['shouldAskToSaveQuery'] = true;
 });
