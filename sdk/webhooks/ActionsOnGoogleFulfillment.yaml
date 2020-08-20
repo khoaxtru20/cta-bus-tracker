@@ -15,5 +15,5 @@ handlers:
 - name: add_route_suggestions
 - name: add_stop_suggestions
 httpsEndpoint:
-  baseUrl: https://14aa74c12447.ngrok.io/cta-bus-tracker-73811/us-central1/ActionsOnGoogleFulfillment
+  baseUrl: https://us-central1-cta-bus-tracker-73811.cloudfunctions.net/ActionsOnGoogleFulfillment
   endpointApiVersion: 2

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const {conversation, Suggestion} = require('@assistant/conversation');
+const {conversation, Card, Suggestion} = require('@assistant/conversation');
 const functions = require('firebase-functions');
 const axios = require('axios');
 const api = require('./api.js');
@@ -164,8 +164,12 @@ app.handle('predict_number', async (conv) =>{
       message += 'in about ' + predictions[0].prdctdn + ' minutes ';
     }
     message += 'at ' + helpers.formatTime(predictions[0].prdtm) + '.';
-    
     conv.add(message);
+    conv.add(new Card({
+      title: `Route ${predictions[0].rt}`,
+      subtitle: `${predictions[0].stpnm}`,
+      text: message
+    }));
   }
 });
 
