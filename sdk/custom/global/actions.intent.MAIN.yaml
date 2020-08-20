@@ -1,1 +1,3 @@
+handler:
+  webhookHandler: check_user_storage
 transitionToScene: RequestBusNumber

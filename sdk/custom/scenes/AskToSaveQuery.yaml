@@ -1,0 +1,37 @@
+conditionalEvents:
+- condition: session.params.shouldAskToSaveQuery == true
+  handler:
+    staticPrompt:
+      candidates:
+      - promptResponse:
+          firstSimple:
+            variants:
+            - speech: Do you want to save this search? By saying "yes", you consent
+                to this Action reading and writing information to your user storage.
+          suggestions:
+          - title: "Yes"
+          - title: "No"
+- condition: session.params.shouldAskToSaveQuery == false
+  transitionToScene: actions.scene.END_CONVERSATION
+intentEvents:
+- handler:
+    staticPrompt:
+      candidates:
+      - promptResponse:
+          firstSimple:
+            variants:
+            - speech: Your search is saved. Thanks for using Windy City Bus Tracker!
+    webhookHandler: set_query
+  intent: "YES"
+  transitionToScene: actions.scene.END_CONVERSATION
+- handler:
+    staticPrompt:
+      candidates:
+      - promptResponse:
+          firstSimple:
+            variants:
+            - speech: No problem. Thanks for using Windy City Bus Tracker!
+  intent: "NO"
+  transitionToScene: actions.scene.END_CONVERSATION
+onEnter:
+  webhookHandler: predict_number

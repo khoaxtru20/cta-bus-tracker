@@ -1,35 +1,12 @@
 conditionalEvents:
 - condition: scene.slots.status=="FINAL"
   transitionToScene: RequestBusDirection
-intentEvents:
-- handler:
-    staticPrompt:
-      candidates:
-      - promptResponse:
-          firstSimple:
-            variants:
-            - speech: Ok! Let's find your route by name.
-  intent: SEARCH_BY_ROUTE_NAME
-  transitionToScene: RequestBusName
-- handler:
-    staticPrompt:
-      candidates:
-      - promptResponse:
-          firstSimple:
-            variants:
-            - speech: Ok! Let's search for your bus by ID.
-  intent: SEARCH_BUS_ID
-  transitionToScene: RequestBusID
 onEnter:
   webhookHandler: override_bus_ID_type
 onSlotUpdated:
   webhookHandler: validate_bus_num
 slots:
-- commitBehavior:
-    writeSessionParam: bus_num
-  defaultValue:
-    sessionParam: bus_num_from_intent
-  name: bus_ID
+- name: bus_ID
   promptSettings:
     initialPrompt:
       staticPrompt:
@@ -38,6 +15,7 @@ slots:
             firstSimple:
               variants:
               - speech: What is the bus number or route name?
+      webhookHandler: add_route_suggestions
   required: true
   type:
     name: bus_ID

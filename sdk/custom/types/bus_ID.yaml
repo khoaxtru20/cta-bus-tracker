@@ -9,15 +9,9 @@ synonym:
     "9":
       synonyms:
       - "9"
-    X9:
-      synonyms:
-      - X9
     "14":
       synonyms:
       - "14"
-    J14:
-      synonyms:
-      - J14
     "49":
       synonyms:
       - "49"
@@ -66,9 +60,6 @@ synonym:
     63W:
       synonyms:
       - 63W
-    X49:
-      synonyms:
-      - X49
     "81":
       synonyms:
       - "81"
@@ -81,13 +72,22 @@ synonym:
     85A:
       synonyms:
       - 85A
-    X98:
-      synonyms:
-      - X98
     "111":
       synonyms:
       - "111"
     111A:
       synonyms:
       - 111A
+    J14:
+      synonyms:
+      - J14
+    X9:
+      synonyms:
+      - X9
+    X49:
+      synonyms:
+      - X49
+    X98:
+      synonyms:
+      - X98
   matchType: EXACT_MATCH

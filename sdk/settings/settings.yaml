@@ -6,16 +6,29 @@ localizedSettings:
   developerEmail: khoaxtru16@gmail.com
   developerName: Khoa Truong
   displayName: Windy City Bus Tracker
-  fullDescription: |-
-    It's easy to track CTA buses with the Windy City Bus Tracker. All you need is the route (bus) number, the direction you are headed. The prediction times are provided by the CTA and are always fresh. This is a beta version. Functionality is limited but is being improved. Suggestions are encouraged. Thank you for choosing Windy City Bus Tracker!
-
-    CTA Bus Tracker (SM) logo icon is a trademark of the Chicago Transit Authority.
+  fullDescription: "It's easy to track CTA buses with the Windy City Bus Tracker.
+    First, the Action will ask for the bus number or route name. Then, it will ask
+    you for the direction you are headed. Finally, it will ask for the name of the
+    stop which is usually the main street and its intersection (e.g. \"67th Street
+    & Cottage Grove\"). \n\nOnce you know the exact details of your stop, you can
+    get ETAs by typing something like, \"Talk to Windy City Bus Tracker and track
+    the westbound 201 bus at Sheridan & Lincoln\". The stop is case-sensitive and
+    must exactly match the stop listed in the CTA database.\n\nPrediction times are
+    provided by the CTA and are always fresh. This is a beta version. Functionality
+    is limited but is being improved. Suggestions are encouraged. Thank you for choosing
+    Windy City Bus Tracker!\n\nCTA Bus Tracker (SM) logo icon is a trademark of the
+    Chicago Transit Authority."
   privacyPolicyUrl: https://docs.google.com/document/d/1utnjFp_4BeQlCVH5E5O0xXEtea6zv-bnyEFTulc7T8Y/edit?usp=sharing
   pronunciation: Windy City Bus Tracker
   sampleInvocations:
   - Talk to Windy City Bus Tracker
-  - Talk to Windy City and track the Westbound 201 at Sheridan & Lincoln
+  - Talk to Windy City Bus Tracker and track the Westbound 201 at Sheridan & Lincoln
   shortDescription: Get ETAs of CTA buses near you!
   smallLogoImage: https://lh3.googleusercontent.com/HfO08HFZJQqFOnWdSY4RQzo2pekk73ZnnMdSAu22LS5DU8GmIBQygB5VPAjxtqSmwmQa0A41CJOxBA
+  themeCustomization:
+    backgroundColor: '#FAFAFA'
+    fontFamily: serif
+    imageCornerStyle: CURVED
+    primaryColor: '#101010'
   voice: male_1
 projectId: cta-bus-tracker-73811

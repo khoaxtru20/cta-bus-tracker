@@ -1,17 +1,19 @@
 handlers:
-- name: predict_intersection
-- name: predict_poi
-- name: set_bus_num_from_name
 - name: override_bus_stop_type
 - name: validate_bus_stop
 - name: get_route_directions
 - name: validate_bus_dir
 - name: validate_bus_num
 - name: predict_number
-- name: validate_bus_name
 - name: ask_for_directions
 - name: override_bus_ID_type
 - name: validate_bus_info
+- name: set_query
+- name: get_query
+- name: clear_query
+- name: check_user_storage
+- name: add_route_suggestions
+- name: add_stop_suggestions
 httpsEndpoint:
-  baseUrl: https://9622b326beba.ngrok.io/cta-bus-tracker-73811/us-central1/ActionsOnGoogleFulfillment
+  baseUrl: https://14aa74c12447.ngrok.io/cta-bus-tracker-73811/us-central1/ActionsOnGoogleFulfillment
   endpointApiVersion: 2

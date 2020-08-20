@@ -1,0 +1,14 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: validate_bus_num
+  transitionToScene: GLOBAL_RequestBusDirection
+onEnter:
+  webhookHandler: override_bus_ID_type
+slots:
+- defaultValue:
+    sessionParam: bus_num_from_intent
+  name: bus_ID
+  required: true
+  type:
+    name: bus_ID

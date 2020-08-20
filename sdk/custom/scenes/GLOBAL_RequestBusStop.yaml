@@ -1,12 +1,14 @@
 conditionalEvents:
 - condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: validate_bus_stop
   transitionToScene: AskToSaveQuery
 onEnter:
   webhookHandler: override_bus_stop_type
-onSlotUpdated:
-  webhookHandler: validate_bus_stop
 slots:
-- name: bus_stop
+- defaultValue:
+    sessionParam: bus_stop_from_intent
+  name: bus_stop
   promptSettings:
     initialPrompt:
       staticPrompt:
@@ -15,7 +17,6 @@ slots:
             firstSimple:
               variants:
               - speech: At which stop are you?
-      webhookHandler: add_stop_suggestions
   required: true
   type:
     name: bus_stop

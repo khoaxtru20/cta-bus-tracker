@@ -13,25 +13,44 @@ exports.dirToUpperCase = (dir) => {
  * @return {object} entry object with @prop name @prop synonyms
  */
 function createStopEntry(name){
-    var _name = name.replace(/&/gi, "and");
-    var entry = {
+    let replacedAnd = name.replace(/&/gi, "and");
+    let formattedName = replacedAnd.replace(/[^\w\s]/gi, " ").replace(/\s{2}/gi, " ")
+    .replace(/\bn\b/gi, "North")
+    .replace(/\bs\b/gi, "South")
+    .replace(/\be\b/gi, "East")
+    .replace(/\bw\b/gi, "West")
+    .replace(/\bu\b/gi, "University")
+    .replace(/\bhwy\b/gi, "Highway")
+    .replace(/\brd\b/gi, "Road")
+    .replace(/\bblvd\b/gi, "Boulevard")
+    .replace(/\bbldg\b/gi, "Building");
+    let reversedName = formattedName.split(" and ").reverse().join(" and ");
+    let uniqueSet = new Set([
+        name,
+        replacedAnd,
+        formattedName,
+        reversedName
+    ]);
+
+    let entry = {
         name: name,
-        synonyms: [
-            name,
-            _name,
-            _name.split(" ").reverse().join(" ")
-        ]
+        synonyms: Array.from(uniqueSet)
     }
     return entry;
 }
+
 function createRouteEntry(routeObj){
-    var entry = {
+    let formattedName = routeObj.rtnm.replace(/[^\w\s]/gi, " ").replace(/\s{2}/gi, " ") //replace all punctuation with a space then remove any double spaces
+    .replace(/\bu\b/gi, "University")
+    .replace(/\bblvd\b/gi, "Boulevard");
+    let uniqueSet = new Set([
+        routeObj.rt,
+        routeObj.rtnm,
+        formattedName
+    ])
+    let entry = {
         name: routeObj.rt,
-        synonyms: [
-            routeObj.rt,
-            routeObj.rtnm,
-            routeObj.rtnm.replace(/[^\w\s]/gi, " ").replace(/\s{2}/gi, " ") //replace all punctuation with a space then remove any double spaces
-        ]
+        synonyms: Array.from(uniqueSet)
     }
     return entry;
 }
@@ -88,7 +107,7 @@ exports.formatTime = function(time){
     let _time = time.split(" ")[1];             //"11:34"
     let [_hour, _minu] = _time.split(":");      //_hour = 11, _minu = 34
     let _meri = "AM";
-    switch(_hour <= 12){
+    switch(_hour <= 12){ //use mod instead of this
         case true:
             if(_hour === 12){ _meri = "PM"; }
             break;
@@ -98,7 +117,4 @@ exports.formatTime = function(time){
             break;
     }
     return _hour + ':' + _minu + ' ' + _meri;
-}
-exports.isError = function(response){
-    
 }

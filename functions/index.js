@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const {conversation} = require('@assistant/conversation');
+const {conversation, Suggestion} = require('@assistant/conversation');
 const functions = require('firebase-functions');
 const axios = require('axios');
 const api = require('./api.js');
@@ -40,6 +40,17 @@ app.handle('override_bus_ID_type', async (conv) => {
       entries: helpers.createRouteEntries(temp_routes)
       }
   }];
+
+})
+
+app.handle('add_route_suggestions', (conv) => {
+  let suggestions = [];
+  for (let index = 0; index < 8; index++) {
+    suggestions.push(new Suggestion({
+      title: (conv.session.params.routes[Math.floor(Math.random() * (conv.session.params.routes.length - 1))].rtnm).substr(0,25)
+    }))
+  }
+  conv.prompt.suggestions = suggestions;
 })
 app.handle('validate_bus_num', (conv) => {
   let index = helpers.getRouteIndex(conv.session.params.routes, conv.scene.slots['bus_ID'].value);
@@ -50,7 +61,6 @@ app.handle('validate_bus_num', (conv) => {
     conv.session.params.bus_num = conv.session.params.routes[index];
     conv.session.params.routes = null;
   }
-
 })
 
 app.handle('get_route_directions', async (conv) => {
@@ -67,6 +77,14 @@ app.handle('get_route_directions', async (conv) => {
 
 app.handle('ask_for_directions', (conv) => {
   if(conv.session.params['route_directions'].length > 1){
+    conv.prompt.suggestions = [
+      new Suggestion({
+        title: conv.session.params.route_directions[0]
+      }),
+      new Suggestion({
+        title: conv.session.params.route_directions[1]
+      })
+    ];
     conv.add(`Are you ${conv.session.params['route_directions'][0]} or ${conv.session.params['route_directions'][1]}?`);
   } else{
     conv.add(`I'll assume you are ${conv.session.params['route_directions'][0]}.`);
@@ -102,11 +120,23 @@ app.handle('override_bus_stop_type', async (conv) => {
     conv.session.params.stops = temp_stops;
   }
 });
+
+app.handle('add_stop_suggestions', (conv) =>{
+  let suggestions = [];
+  for (let index = 0; index < 8; index++) {
+    suggestions.push(new Suggestion({
+      title: (conv.session.params.stops[Math.floor(Math.random() * (conv.session.params.stops.length - 1))].stpnm).substr(0,25)
+    }))
+  }
+  conv.prompt.suggestions = suggestions;
+});
+
 app.handle('validate_bus_stop', (conv) => {
     let index = helpers.getStopIndex(conv.session.params.stops, conv.scene.slots['bus_stop'].value);
     if(index < 0){
-      conv.add('The stop ' + conv.scene.slots['bus_stop'].value + ' does not exist. Let\'s try to find your stop by intersection.');
+      conv.add('The stop ' + conv.scene.slots['bus_stop'].value + ' does not exist. Please try another stop.');
       conv.scene.slots['bus_stop'].status = 'INVALID';
+      conv.scene.next.name = 'RequestBusStop';
     } else{
       conv.session.params.bus_stop = conv.session.params.stops[index];
       conv.session.params.stops = null;
@@ -124,7 +154,7 @@ app.handle('predict_number', async (conv) =>{
     if(predictions[0].dly === false){
       message += 'There are no delays. The next bus is due ';
     }else{
-      message += 'There is a delay. The next bus was due ';
+      message += 'There is a delay. The next bus should have been due ';
     }
     if(predictions[0].prdctdn === 'DUE'){
       message += 'now ';
@@ -137,13 +167,14 @@ app.handle('predict_number', async (conv) =>{
   }
 });
 
-app.handle('validate_bus_info', (conv) =>{
+app.handle('validate_bus_info', async (conv) =>{
   if('bus_num' in conv.intent.params){
     conv.session.params['bus_num_from_intent'] = conv.intent.params['bus_num'].resolved; //strictly assumes correct bus ID (!name)
   }
   if('bus_stop' in conv.intent.params){
     conv.session.params['bus_stop_from_intent'] = conv.intent.params['bus_stop'].resolved; //strictly assumes correct bus stop (e.g. Sheridan & Jarvis not sheridan and jarvis)
   }
+  conv.session.params['shouldAskToSaveQuery'] = true;
 });
 
 app.handle('check_user_storage', (conv) =>{
@@ -162,8 +193,9 @@ app.handle('set_query', (conv) =>{
 app.handle('get_query', (conv) =>{
   conv.session.params['bus_num'] = conv.user.params['bus_num'];
   conv.session.params['bus_dir'] = conv.user.params['bus_dir'];
-  conv.session.params['bus_stop_from_intent'] = conv.user.params['bus_stop'].stpnm;
   conv.session.params['bus_stop'] = conv.user.params['bus_stop'];
+
+  conv.session.params['bus_stop_from_intent'] = conv.user.params['bus_stop'].stpnm;
   conv.session.params['shouldAskToSaveQuery'] = false;
 })
 

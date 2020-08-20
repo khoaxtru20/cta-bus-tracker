@@ -1,0 +1,14 @@
+conditionalEvents:
+- condition: scene.slots.status == "FINAL"
+  handler:
+    webhookHandler: validate_bus_dir
+  transitionToScene: GLOBAL_RequestBusStop
+onEnter:
+  webhookHandler: get_route_directions
+slots:
+- commitBehavior:
+    writeSessionParam: bus_dir
+  name: bus_dir
+  required: true
+  type:
+    name: cardinal_direction
