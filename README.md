@@ -12,7 +12,7 @@
 #### Actions Console
 1. From the [Actions on Google Console](https://console.actions.google.com/), **New project** > **Create project** > under **What kind of Action do you want to build?** > **Custom** > **Blank project**
 
-### Actions CLI
+#### Actions CLI
 1. Install the [Actions CLI](https://developers.google.com/assistant/actionssdk/gactions)
 1. Navigate to `sdk/settings/settings.yaml`, and replace `<PROJECT_ID>` with your project ID
     + To find your project ID, click the three dots > **Project Settings**
@@ -22,7 +22,7 @@
 1. Update `settings.yaml` (or **Settings** in the Actions Console) to fix errors
     + e.g. `displayName` key must be unique from other Actions).
 
-### Firebase Functions
+#### Firebase Functions
 1. Navigate to the functions directory.
 1. Run `npm install`
 1. Run `firebase use --add` and follow the prompts to use your project.
@@ -46,12 +46,12 @@ Deploying your function every time you update code gets annoying. So here is how
 1. Run `npm run serve`. Note the port on which the function is running, usually 5001
 1. Run `ngrok http <PORT>` with the port number.
 1. Copy the HTTPS forwarding URL and paste it in `baseUrl` key in `sdk/webhooks/ActionsOnGoogleFulfillment.yaml`
-1. Run `gactions push`.
+1. Run `gactions push` from the `sdk/` directory.
 1. Test code live from the Actions on Google Console simulator.
 #### When Finished
 1. Replace the `baseUrl` value with the original Firebase function URL
     + You can find this in your Firebase Console if it doesn't appear in your own.
-1. Run `npm run deploy`.
+1. Run `npm run deploy` from the `functions/` directory.
 
 
 
