@@ -132,7 +132,9 @@ app.handle('add_stop_suggestions', (conv) =>{
   }
   conv.prompt.suggestions = suggestions;
 });
-
+/**
+ * @TODO Bus stop search fails with route 26. I think helper functions are taking too long to process
+ */
 app.handle('validate_bus_stop', (conv) => {
     let index = helpers.getStopIndex(conv.session.params.stops, conv.scene.slots['bus_stop'].value);
     if(index < 0){

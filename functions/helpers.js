@@ -13,8 +13,9 @@ exports.dirToUpperCase = (dir) => {
  * @return {object} entry object with @prop name @prop synonyms
  */
 function createStopEntry(name){
+    let truncatedName = name.substr(0,25);
     let replacedAnd = name.replace(/&/gi, "and");
-    let formattedName = replacedAnd.replace(/[^\w\s]/gi, " ").replace(/\s{2}/gi, " ")
+    let formattedName = replacedAnd.replace(/[^\w\s]/gi, " ").replace(/\s{2,}/gi, " ")
     .replace(/\bn\b/gi, "North")
     .replace(/\bs\b/gi, "South")
     .replace(/\be\b/gi, "East")
@@ -29,7 +30,8 @@ function createStopEntry(name){
         name,
         replacedAnd,
         formattedName,
-        reversedName
+        reversedName,
+        truncatedName
     ]);
 
     let entry = {
@@ -40,13 +42,16 @@ function createStopEntry(name){
 }
 
 function createRouteEntry(routeObj){
-    let formattedName = routeObj.rtnm.replace(/[^\w\s]/gi, " ").replace(/\s{2}/gi, " ") //replace all punctuation with a space then remove any double spaces
+    let truncatedName = routeObj.rtnm.substr(0,25);
+     //replace all punctuation with a space then remove any double spaces (does not account for spaces at end of string)
+    let formattedName = routeObj.rtnm.replace(/[^\w\s]/gi, " ").replace(/\s{2}/gi, " ")
     .replace(/\bu\b/gi, "University")
     .replace(/\bblvd\b/gi, "Boulevard");
     let uniqueSet = new Set([
         routeObj.rt,
         routeObj.rtnm,
-        formattedName
+        formattedName,
+        truncatedName
     ])
     let entry = {
         name: routeObj.rt,
