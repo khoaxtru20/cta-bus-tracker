@@ -3,9 +3,7 @@ defaultLocale: en
 enabledRegions:
 - United States
 localizedSettings:
-  developerEmail: khoaxtru16@gmail.com
-  developerName: Khoa Truong
-  displayName: Windy City Bus Tracker
+  displayName: <PROJECT_NAME>
   fullDescription: "It's easy to track CTA buses with the Windy City Bus Tracker.
     First, the Action will ask for the bus number or route name. Then, it will ask
     you for the direction you are headed. Finally, it will ask for the name of the
@@ -19,10 +17,6 @@ localizedSettings:
     Windy City Bus Tracker!\n\nCTA Bus Tracker (SM) logo icon is a trademark of the
     Chicago Transit Authority."
   privacyPolicyUrl: https://docs.google.com/document/d/1utnjFp_4BeQlCVH5E5O0xXEtea6zv-bnyEFTulc7T8Y/edit?usp=sharing
-  pronunciation: Windy City Bus Tracker
-  sampleInvocations:
-  - Talk to Windy City Bus Tracker
-  - Talk to Windy City Bus Tracker and track the Westbound 201 at Sheridan & Lincoln
   shortDescription: Get ETAs of CTA buses near you!
   smallLogoImage: https://lh3.googleusercontent.com/HfO08HFZJQqFOnWdSY4RQzo2pekk73ZnnMdSAu22LS5DU8GmIBQygB5VPAjxtqSmwmQa0A41CJOxBA
   themeCustomization:
@@ -31,4 +25,4 @@ localizedSettings:
     imageCornerStyle: CURVED
     primaryColor: '#101010'
   voice: male_1
-projectId: cta-bus-tracker-73811
+projectId: <PROJECT_ID>

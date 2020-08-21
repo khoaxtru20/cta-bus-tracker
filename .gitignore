@@ -108,3 +108,4 @@ dist
 .firebase
 functions/test
 functions/.runtimeconfig.json
+*.code-workspace

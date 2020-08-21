@@ -15,5 +15,5 @@ handlers:
 - name: add_route_suggestions
 - name: add_stop_suggestions
 httpsEndpoint:
-  baseUrl: https://us-central1-cta-bus-tracker-73811.cloudfunctions.net/ActionsOnGoogleFulfillment
+  baseUrl: https://us-central1-<PROJECT_ID>.cloudfunctions.net/ActionsOnGoogleFulfillment
   endpointApiVersion: 2
